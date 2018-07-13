@@ -1,10 +1,26 @@
+console.log("app.js is running...");
+
+
 // 1. Require your node modules
+const mongoose = require("mongoose");
+const app = mongoose.connection;
+const Vampire = require("./models/vampire")
+
 
 // 2. Require your model (and possibly your extra data source);
+const Vampire = mongoose.model("Vampire", vampireSchema);
 
 // 3. Connect your database and collection name
+mongoose.connect("mongodb://localhost:27017/vampires");
 
 // 4. Open your mongoose connection
+app.on("error", (err) => {
+	console.log(err, " this is the error message");
+});
+
+app.on("connected", () => {
+	console.log("mongoose is connected to mongodb");
+});
 
 /////////////////////////////////////////////////
 //Write your answers to add, query, update, remove, and Hungry for More below.
