@@ -4,11 +4,10 @@ console.log("app.js is running...");
 // 1. Require your node modules
 const mongoose = require("mongoose");
 const app = mongoose.connection;
-const Vampire = require("./models/vampire")
 
 
 // 2. Require your model (and possibly your extra data source);
-const Vampire = mongoose.model("Vampire", vampireSchema);
+const Vampire = require("./models/vampire")
 
 // 3. Connect your database and collection name
 mongoose.connect("mongodb://localhost:27017/vampires");
