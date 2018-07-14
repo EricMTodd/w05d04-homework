@@ -11,7 +11,8 @@ const populateVampires = require("./populateVampires");
 const Vampire = require("./models/vampire")
 
 // 3. Connect your database and collection name
-mongoose.connect("mongodb://localhost:27017/vampires");
+const url = "mongodb://localhost:27017/vampires";
+mongoose.connect(url, { useNewUrlParser:true });
 
 // 4. Open your mongoose connection
 app.on("error", (err) => {
@@ -19,7 +20,7 @@ app.on("error", (err) => {
 });
 
 app.on("connected", () => {
-	console.log("mongoose is connected to mongodb");
+	console.log("Mongoose is connected.");
 });
 
 /////////////////////////////////////////////////
@@ -31,11 +32,11 @@ app.on("connected", () => {
 // INSERT USING MONGOOSE
 // ### Add the vampire data that we gave you
 Vampire.collection.insertMany(populateVampires, (err, data) => {
-	console.log("added provided vampire data");
-	mongoose.connection.close();
-});
-
-// ### Add some new vampire data
+	if (err) {
+		console.log("Failed to add provided vampire data.");
+	} else {
+		console.log("Succesfully added provided vampire data.");
+		// ### Add some new vampire data
 Vampire.create({
 	name: "Darian Falkenrath",
 	hair_color: "Black",
@@ -79,23 +80,69 @@ Vampire.create({
 	if (err) {
 		console.log("Failure to create vampires.");
 	} else {
-		console.log(createdVampires, "Falkenrath and Stromkirk families successfully created.");
-	}
-});
-
+		console.log("Falkenrath and Stromkirk families successfully created.");
 /////////////////////////////////////////////////
 // ## QUERYING
 /////////////////////////////////////////////////
 // ### Select by comparison
-// Vampire.find( { gender: { $eq: 'f' } }, (err, femaleVampires) => {
-// 	if (err) {
-// 		console.log("female vampies not found, search failed");
-// 	} else {
-// 		console.log(femaleVampires, "female vampires successfully found.");
-// 	}
-// });
 
-// Vampire.find();
+// Find all female vampires and log responses to the console.
+Vampire.find( { gender: { $eq: 'f' } }, (err, femaleVampires) => {
+	if (err) {
+		console.log("Female vampies not found, search failed");
+	} else {
+		console.log("Female vampires successfully found.", femaleVampires);
+// Find all vampires with victims greater than 500 and log responses to the console.
+Vampire.find( { victims: { $gt: 500 } }, (err, victimsGreaterThanFiveHundred) => {
+	if (err) {
+		console.log("Failed to find vampires with victims greater than 500.");
+	} else {
+		console.log("Succesfully found vampires with victims greater than 500.", victimsGreaterThanFiveHundred);
+// Find all vampires with victims less than or equal to 150 and log responses to the console.
+Vampire.find( { victims: { $lte: 150 } }, (err, victimsFewerThanOrEqualToOneHundredFifty) => {
+	if (err) {
+		console.log("Failed to find vampires with victims fewer than or equal to 150.");
+	} else {
+		console.log("Succesfully found vampires with victims fewer than or equal to 150.", victimsFewerThanOrEqualToOneHundredFifty);
+// Find all the vampires that have a victim count not equal to 210234.
+Vampire.find( { victims: { $ne: 210234 } }, (err, victimsNotEqualToTwoHundredTenThousandTwoHundredThirtyFour) => {
+	if (err) {
+		console.log("Failed to find vampires with victims not equal to 210234.");
+	} else {
+		console.log("Succesfully found vampires with victims not equal to 210234.", victimsNotEqualToTwoHundredTenThousandTwoHundredThirtyFour);
+// Find all the vampires that have victims greater than 150 and fewer than 500.
+Vampire.find( { victims: { $gt: 150 } && { $lt: 500 } }, (err, victimsGreaterThanOneHundredFiftyAndFewerThanFiveHundred) => {
+	if (err) {
+		console.log("Failed to find vampires that have victims greater than 150 and fewer than 500.");
+	} else {
+		console.log("Succesfully found vampires that have victims greater than 150 and fewer than 500.", victimsGreaterThanOneHundredFiftyAndFewerThanFiveHundred);
+// Clears out the vampire collection to ensure every time the code is run, what is created with in the code is not duplicated. The connection is then closed upon a successful clear.
+Vampire.remove({}, (err, reset) => {
+	if (err) {
+		console.log("Failed to clear vampires collection.");
+	} else {
+		console.log("Succesfully cleared vampires collection.");
+		mongoose.connection.close();
+	}
+});
+	}
+});
+	}
+});
+	}
+});
+	}
+});
+	}
+});
+	}
+});
+	}
+});
+
+
+
+
 /////////////////////////////////////////////////
 // ### Select by exists or does not exist
 
