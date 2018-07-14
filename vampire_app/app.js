@@ -35,7 +35,7 @@ Vampire.collection.insertMany(populateVampires, (err, data) => {
 	if (err) {
 		console.log("Failed to add provided vampire data.");
 	} else {
-		console.log("Succesfully added provided vampire data.");
+		console.log("Successfully added provided vampire data.");
 		// ### Add some new vampire data
 Vampire.create({
 	name: "Darian Falkenrath",
@@ -97,35 +97,69 @@ Vampire.find( { victims: { $gt: 500 } }, (err, victimsGreaterThanFiveHundred) =>
 	if (err) {
 		console.log("Failed to find vampires with victims greater than 500.");
 	} else {
-		console.log("Succesfully found vampires with victims greater than 500.", victimsGreaterThanFiveHundred);
+		console.log("Successfully found vampires with victims greater than 500.", victimsGreaterThanFiveHundred);
 // Find all vampires with victims less than or equal to 150 and log responses to the console.
 Vampire.find( { victims: { $lte: 150 } }, (err, victimsFewerThanOrEqualToOneHundredFifty) => {
 	if (err) {
 		console.log("Failed to find vampires with victims fewer than or equal to 150.");
 	} else {
-		console.log("Succesfully found vampires with victims fewer than or equal to 150.", victimsFewerThanOrEqualToOneHundredFifty);
+		console.log("Successfully found vampires with victims fewer than or equal to 150.", victimsFewerThanOrEqualToOneHundredFifty);
 // Find all the vampires that have a victim count not equal to 210234.
 Vampire.find( { victims: { $ne: 210234 } }, (err, victimsNotEqualToTwoHundredTenThousandTwoHundredThirtyFour) => {
 	if (err) {
 		console.log("Failed to find vampires with victims not equal to 210234.");
 	} else {
-		console.log("Succesfully found vampires with victims not equal to 210234.", victimsNotEqualToTwoHundredTenThousandTwoHundredThirtyFour);
+		console.log("Successfully found vampires with victims not equal to 210234.", victimsNotEqualToTwoHundredTenThousandTwoHundredThirtyFour);
 // Find all the vampires that have victims greater than 150 and fewer than 500.
 Vampire.find( { victims: { $gt: 150 } && { $lt: 500 } }, (err, victimsGreaterThanOneHundredFiftyAndFewerThanFiveHundred) => {
 	if (err) {
 		console.log("Failed to find vampires that have victims greater than 150 and fewer than 500.");
 	} else {
-		console.log("Succesfully found vampires that have victims greater than 150 and fewer than 500.", victimsGreaterThanOneHundredFiftyAndFewerThanFiveHundred);
+		console.log("Successfully found vampires that have victims greater than 150 and fewer than 500.", victimsGreaterThanOneHundredFiftyAndFewerThanFiveHundred);
+/////////////////////////////////////////////////
+// ### Select by exists or does not exist
+// Find all vampires that have a title property.
+Vampire.find( { title: { $exists: true } }, (err, titleExists) => {
+	if (err) {
+		console.log("Failed to find vampires that have a title property.");
+	} else {
+		console.log("Successfully found all vampires that have a title property.", titleExists);
+// Find vampires that do not have a victims propery.
+Vampire.find( { victims: { $exists: false } }, (err, victimsDoNotExist) => {
+	if (err) {
+		console.log("Failed to find vampires that do not have a victims propery.");
+	} else {
+		console.log("Successfully found vampires that do not have a victims propery.", victimsDoNotExist);
+// Find all vampires that have a title and no victims. (Barnabas Spenser)
+Vampire.find( { $and: [ { title: { $exists: true } }, {victims: { $exists: false } } ] }, (err, titleAndNoVictims) => {
+	if (err) {
+		console.log("Failed to find vampires that have a title and no victims.");
+	} else {
+		console.log("Successfully found vampires that have a title and no victims.", titleAndNoVictims);
+// Find all vampires that have victims and their count is greater than 1000.
+Vampire.find( { victims: { $gt: 1000 } }, (err, victimsGreaterThanOneThousand) => {
+	if (err) {
+		console.log("Failed to find vampires with victims greater than 1000.");
+	} else {
+		console.log("Successfully found vampires with victims greater than 1000.", victimsGreaterThanOneThousand);
 // Clears out the vampire collection to ensure every time the code is run, what is created with in the code is not duplicated. The connection is then closed upon a successful clear.
 Vampire.remove({}, (err, reset) => {
 	if (err) {
 		console.log("Failed to clear vampires collection.");
 	} else {
-		console.log("Succesfully cleared vampires collection.");
+		console.log("Successfully cleared vampires collection.");
 		mongoose.connection.close();
 	}
 });
 	}
+});	
+	}
+});
+	}
+});
+	}
+});
+	}
 });
 	}
 });
@@ -143,8 +177,7 @@ Vampire.remove({}, (err, reset) => {
 
 
 
-/////////////////////////////////////////////////
-// ### Select by exists or does not exist
+
 
 /////////////////////////////////////////////////
 // ### Select with OR
