@@ -43,7 +43,7 @@ Vampire.create({
 	dob: "Unknown",
 	loves: ["Blood", "Power", "Olivia Voldaren"],
 	location: "Bloodspire, Durnvohst",
-	gender: "Male",
+	gender: "m",
 	victims: 13000
 },
 {
@@ -53,7 +53,7 @@ Vampire.create({
 	dob: "Unknown",
 	loves:["Blood", "Power", "Herself"],
 	location: "Bloodspire, Durnvohst",
-	gender: "Female",
+	gender: "f",
 	victims: 700
 },
 {
@@ -63,7 +63,7 @@ Vampire.create({
 	dob: "Unknown",
 	loves: ["Blood", "Power", "The Falkenrath Syndicate"],
 	location: "Bloodspire, Durnvohst",
-	gender: "Male",
+	gender: "m",
 	victims: 200
 },
 {
@@ -73,16 +73,29 @@ Vampire.create({
 	dob: "Unknown",
 	loves: ["Blood", "Power", "Aldwind Stromkirk"],
 	location: "Bloodspire, Durnvohst",
-	gender: "Female",
+	gender: "f",
 	victims: 128
-}
-);
+}, (err, createdVampires) => {
+	if (err) {
+		console.log("Failure to create vampires.");
+	} else {
+		console.log(createdVampires, "Falkenrath and Stromkirk families successfully created.");
+	}
+});
 
 /////////////////////////////////////////////////
 // ## QUERYING
 /////////////////////////////////////////////////
 // ### Select by comparison
+// Vampire.find( { gender: { $eq: 'f' } }, (err, femaleVampires) => {
+// 	if (err) {
+// 		console.log("female vampies not found, search failed");
+// 	} else {
+// 		console.log(femaleVampires, "female vampires successfully found.");
+// 	}
+// });
 
+// Vampire.find();
 /////////////////////////////////////////////////
 // ### Select by exists or does not exist
 
