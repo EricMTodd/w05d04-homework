@@ -131,7 +131,7 @@ Vampire.find( { victims: { $exists: false } }, (err, victimsDoNotExist) => {
 	} else {
 		console.log("Successfully found vampires that do not have a victims propery.", victimsDoNotExist);
 // Find all vampires that have a title and no victims. (Barnabas Spenser)
-Vampire.find( { $and: [ { title: { $exists: true } }, {victims: { $exists: false } } ] }, (err, titleAndNoVictims) => {
+Vampire.find( { $and: [ { title: { $exists: true } }, { victims: { $exists: false } } ] }, (err, titleAndNoVictims) => {
 	if (err) {
 		console.log("Failed to find vampires that have a title and no victims.");
 	} else {
@@ -142,6 +142,8 @@ Vampire.find( { victims: { $gt: 1000 } }, (err, victimsGreaterThanOneThousand) =
 		console.log("Failed to find vampires with victims greater than 1000.");
 	} else {
 		console.log("Successfully found vampires with victims greater than 1000.", victimsGreaterThanOneThousand);
+// Select all vampires that are from New York, New York, US or New Orleans, Louisiana, US.
+
 // Clears out the vampire collection to ensure every time the code is run, what is created with in the code is not duplicated. The connection is then closed upon a successful clear.
 Vampire.remove({}, (err, reset) => {
 	if (err) {
