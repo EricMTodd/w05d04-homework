@@ -142,7 +142,34 @@ Vampire.find( { victims: { $gt: 1000 } }, (err, victimsGreaterThanOneThousand) =
 		console.log("Failed to find vampires with victims greater than 1000.");
 	} else {
 		console.log("Successfully found vampires with victims greater than 1000.", victimsGreaterThanOneThousand);
-// Select all vampires that are from New York, New York, US or New Orleans, Louisiana, US.
+/////////////////////////////////////////////////
+// ### Select with OR
+// Find all vampires that are from New York, New York, US or New Orleans, Louisiana, US.
+Vampire.find( { $or: [{location: { $eq: "New York, New York, US" }}, {location: { $eq: "New Orleans, Louisiana, US" }}] }, (err, NewYorkOrNewOrleans) => {
+	if (err) {
+		console.log("Failed to find vampires that are from New York, New York, US or New Orleans, Louisiana, US.");
+	} else {
+		console.log("Successfully found vampires that are from New York, New York, US or New Orleans, Louisiana, US.", NewYorkOrNewOrleans);
+// Find all vampires that love brooding or being tragic.
+Vampire.find( { $or: [{loves: { $eq: "brooding" }}, {loves: { $eq: "being tragic" }}] }, (err, broodingBeingTragic) => {
+	if (err) {
+		console.log("Failed to find vampires that love brooding or being tragic.");
+	} else {
+		console.log("Successfully found vampires that love brooding or being tragic.", broodingBeingTragic);
+// Find all vampires that have more than 1000 victims or love marshmallows.
+Vampire.find( { $or: [{victims: { $gt: 1000 }}, {loves: { $eq: "marshmallows" }}] }, (err, oneThousandMarshmallows) => {
+	if (err) {
+		console.log("Failed to find vampires that have more than 1000 victims or love marshmallows.");
+	} else {
+		console.log("Successfully found vampires that have more than 1000 victims or love marshmallows.", oneThousandMarshmallows);
+// Find all vampires that have red hair or green eyes.
+Vampire.find( { $or: [{hair_color: { $eq: "red" }}, {eye_color: { $eq: "green" }}] }, (err, redHairOrGreenEyes) => {
+	if (err) {
+		console.log("Failed to find vampires that have red hair or green eyes.");
+	} else {
+		console.log("Successfully found vampires that have red hair or green eyes.", redHairOrGreenEyes);
+
+
 
 // Clears out the vampire collection to ensure every time the code is run, what is created with in the code is not duplicated. The connection is then closed upon a successful clear.
 Vampire.remove({}, (err, reset) => {
@@ -175,14 +202,19 @@ Vampire.remove({}, (err, reset) => {
 });
 	}
 });
+	}
+});
+	}
+});
+	}
+});
+	}
+});
 
 
 
 
 
-
-/////////////////////////////////////////////////
-// ### Select with OR
 
 /////////////////////////////////////////////////
 //### Select objects that match one of several values
